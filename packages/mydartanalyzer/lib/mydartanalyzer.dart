@@ -14,11 +14,6 @@ import 'package:analyzer/src/generated/sdk.dart';
 import 'package:analyzer/src/context/context_root.dart';
 
 Future<void> start(List<String> args, List<AnalyzerPlugin> plugins) async {
-  print('Started app');
-  for (final plugin in plugins) {
-    print('Hello ${plugin.name}');
-  }
-
   final driver = _createAnalysisDriver();
 
   final dirToListen = Directory(Directory('./lib').absolute.uri.toFilePath());
@@ -30,36 +25,25 @@ Future<void> start(List<String> args, List<AnalyzerPlugin> plugins) async {
   await for (final event in driver.results) {
     final packagePath = event.session.uriConverter.pathToUri(event.path!);
     final result = await event.session.getLibraryByUri(packagePath!.toString());
-    print(result.source);
-    print(result.imports);
+
+    for (final plugin in plugins) {
+      try {
+        for (final diagnostic in plugin.run(result)) {
+          final label =
+              diagnostic.type == DiagnosticsType.error ? 'error' : 'warning';
+          print('\n$label • ${diagnostic.message}\n${event.path}');
+        }
+      } catch (err, stack) {
+        print(
+          '\nThe plugin ${plugin.name} crashed with the following exception:\n',
+        );
+        print(err);
+        print(stack);
+      }
+    }
   }
 
-  // We don't care about file updates for dart analyze
-  // final fileChangesStream = dirToListen.watch(
-  //   recursive: true,
-  //   events: FileSystemEvent.create &
-  //       FileSystemEvent.modify &
-  //       FileSystemEvent.delete,
-  // );
-
-  // fileChangesStream.listen((event) {
-  //   if (event.isDirectory) return;
-
-  //   switch (event.type) {
-  //     case FileSystemEvent.create:
-  //       print('created ${event.path}');
-  //       driver.addFile(event.path);
-  //       break;
-  //     case FileSystemEvent.modify:
-  //       print('edited ${event.path}');
-  //       driver.changeFile(event.path);
-  //       break;
-  //     case FileSystemEvent.delete:
-  //       print('deleted ${event.path}');
-  //       driver.removeFile(event.path);
-  //       break;
-  //   }
-  // });
+  // TODO: an IDE extension would watch file changess
 }
 
 AnalysisDriver _createAnalysisDriver() {

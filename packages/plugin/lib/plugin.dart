@@ -16,8 +16,6 @@ Future<void> startPlugin({
 }) async {
   final ownerDetails = await _findOwnerPubspec();
 
-  print('owner: ${ownerDetails.name}');
-
   final pubspecFile = File('./pubspec.yaml');
   if (!pubspecFile.existsSync()) {
     _log.stderr(
@@ -48,8 +46,6 @@ Future<void> startPlugin({
     entrypointSource: mainSource,
     pluginInterfaceName: pluginInterfaceName,
   );
-
-  _log.stdout('Starting plugable app');
 
   final process = await Process.start(
     'dart',
