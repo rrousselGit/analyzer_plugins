@@ -1,0 +1,15 @@
+name: mydartanalyzer
+publish_to: "none"
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  plugin:
+    path: ../plugin
+  analyzer_plugin:
+    path: ../analyzer_plugin
+  analyzer: ^1.4.0
+
+executables:
+  mydartanalyzer: main

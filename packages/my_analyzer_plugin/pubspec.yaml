@@ -1,0 +1,9 @@
+name: my_analyzer_plugin
+publish_to: "none"
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  analyzer_plugin:
+    path: ../analyzer_plugin

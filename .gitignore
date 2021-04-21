@@ -1,0 +1,20 @@
+# See https://www.dartlang.org/guides/libraries/private-files
+
+# Files and directories created by pub
+.dart_tool/
+.packages
+.pub/
+pubspec.lock
+
+.idea/
+.data_dir/
+
+# .DS_Store is a file that stores custom attributes of its containing folder,
+# such as the position of icons or the choice of a background image.
+.DS_Store
+
+# Generated files not intended to be checked in to version control
+.flutter-plugins
+flutter_export_environment.sh
+Podfile
+Podfile.lock
