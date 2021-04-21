@@ -35,7 +35,7 @@ Running `dart pub get` in the generated project... 0.9s
 warning • All libraries must contain a global function named `example`
 /Users/remirousselet/dev/analysis/packages/flutter_app_core/lib/main.dart
 
-The plugin AnotherExample crashed with the following exception:
+The plugin another_plugin crashed with the following exception:
 
 Bad state: Fake error to simulate exceptions in plugins
 #0      _AnotherPlugin.run (package:another_plugin/another_plugin.dart:14:5)
